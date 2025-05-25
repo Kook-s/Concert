@@ -4,7 +4,7 @@ services:
     container_name: lectureDB
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root1234         # 루트 계정 비밀번호
+      MYSQL_ROOT_PASSWORD: root123          # 루트 계정 비밀번호
       MYSQL_DATABASE: mydb                  # 생성할 DB 이름
       MYSQL_USER: concert                    # 유저 계정
       MYSQL_PASSWORD: concert123            # 유저 비밀번호

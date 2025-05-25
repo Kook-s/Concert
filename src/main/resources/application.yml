@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:mysql://localhost:3309/mydb?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: concert
+    password: concert123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        # show_sql: true
+        format_sql: true
+        use_sql_comments: true
+
+# schema.sql / data.sql
+#  sql:
+#    init:
+#      mode: always
+
+logging.level:
+  org.hibernate.SQL: debug
+#  org.hibernate.type: trace
