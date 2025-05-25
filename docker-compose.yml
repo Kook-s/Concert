@@ -1,0 +1,24 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: lectureDB
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234         # 루트 계정 비밀번호
+      MYSQL_DATABASE: mydb                  # 생성할 DB 이름
+      MYSQL_USER: concert                    # 유저 계정
+      MYSQL_PASSWORD: concert123            # 유저 비밀번호
+      TZ: Asia/Seoul                        # 시간대 설정
+    ports:
+      - "3309:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - backend
+
+volumes:
+  mysql_data:
+
+networks:
+  backend:
