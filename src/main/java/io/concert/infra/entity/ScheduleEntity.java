@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name = "schedule")
-public class Schedule {
+public class ScheduleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +21,10 @@ public class Schedule {
     private LocalDateTime deadlineAt;       // 예약 마감 시간
 
     @OneToMany(mappedBy = "schedule")
-    private List<Reservation> reservations = new ArrayList<>();
+    private List<ReservationEntity> reservations = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "concert_id")
-    private Concert concert;
+    private ConcertEntity concert;
 
 }

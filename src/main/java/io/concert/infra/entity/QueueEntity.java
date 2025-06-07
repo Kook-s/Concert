@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name = "queue")
 @NoArgsConstructor
-public class Queue {
+public class QueueEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class Queue {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
     private String token;
 
     @Enumerated(EnumType.STRING)

@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Table(name = "reservation")
 @NoArgsConstructor
-public class Reservation {
+public class ReservationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,17 +22,17 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
+    private ScheduleEntity schedule;
 
     @OneToMany(mappedBy = "reservation")
-    private List<Payment> payments = new ArrayList<>();
+    private List<PaymentEntity> payments = new ArrayList<>();
 
     @OneToMany(mappedBy = "reservation")
-    private List<Seat> seats = new ArrayList<>();
+    private List<SeatEntity> seats = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

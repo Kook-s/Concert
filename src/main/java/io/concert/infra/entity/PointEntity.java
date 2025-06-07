@@ -8,23 +8,19 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "payment")
+@Table(name = "point")
 @NoArgsConstructor
-public class Payment {
+public class PointEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "payment_id")
+    @Column(name = "point_id")
     private Long id;
-    private int amount;
-    private LocalDateTime paymentAt;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
-    @ManyToOne
-    @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
-
+    private int amount = 0;
+    private LocalDateTime updatedAt;
 }

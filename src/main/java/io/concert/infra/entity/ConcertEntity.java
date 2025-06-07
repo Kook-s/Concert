@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Table(name = "concert")
 @NoArgsConstructor
-public class Concert {
+public class ConcertEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +24,5 @@ public class Concert {
     private ConcertStatus status;
 
     @OneToMany(mappedBy = "concert", fetch = FetchType.LAZY)
-    private List<Schedule> schedules = new ArrayList<>();
+    private List<ScheduleEntity> schedules = new ArrayList<>();
 }

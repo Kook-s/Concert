@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Table(name = "users")
 @NoArgsConstructor
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,16 +21,16 @@ public class User {
     private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Point point;
+    private PointEntity point;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Reservation> reservations = new ArrayList<>();
+    private List<ReservationEntity> reservations = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Payment> payments = new ArrayList<>();
+    private List<PaymentEntity> payments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Queue> queues = new ArrayList<>();
+    private List<QueueEntity> queues = new ArrayList<>();
 
 
 }

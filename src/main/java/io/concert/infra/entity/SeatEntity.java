@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name = "seat")
 @NoArgsConstructor
-public class Seat {
+public class SeatEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +27,5 @@ public class Seat {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
+    private ReservationEntity reservation;
 }
