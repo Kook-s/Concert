@@ -1,7 +1,10 @@
 package io.concert.infra.repository;
 
-import io.concert.infra.entity.Point;
+import io.concert.infra.entity.PointEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PointJpaRepository extends JpaRepository<Point, Long> {
+import java.util.Optional;
+
+public interface PointJpaRepository extends JpaRepository<PointEntity, Long> {
+    Optional<PointEntity> findByUserId(Long userId);
 }

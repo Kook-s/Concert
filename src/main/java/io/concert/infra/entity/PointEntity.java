@@ -1,5 +1,6 @@
 package io.concert.infra.entity;
 
+import io.concert.domain.model.Point;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,8 @@ public class PointEntity {
 
     private int amount = 0;
     private LocalDateTime updatedAt;
+
+    public Point toPoint(){
+        return new Point(id, user.getId(), amount, updatedAt);
+    }
 }

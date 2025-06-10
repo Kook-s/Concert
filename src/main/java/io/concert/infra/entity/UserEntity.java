@@ -1,5 +1,6 @@
 package io.concert.infra.entity;
 
+import io.concert.domain.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,7 @@ public class UserEntity {
     private List<QueueEntity> queues = new ArrayList<>();
 
 
+    public User toUser() {
+        return new User(id, email, password);
+    }
 }
