@@ -33,6 +33,11 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<QueueEntity> queues = new ArrayList<>();
 
+    public UserEntity(Long id, String email, String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
 
     public User toUser() {
         return new User(id, email, password);
