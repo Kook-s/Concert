@@ -1,2 +1,4 @@
-package io.concert.domain.service;public class UserService {
+package io.concert.domain.service;
+
+public class UserService {
 }
