@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 public record Queue(
-        Long id,
-        UserEntity user,
+        long id,
+        long userId,
         String token,
         QueueStatus status,
         LocalDateTime expiredAt,

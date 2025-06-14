@@ -1,5 +1,6 @@
 package io.concert.infra.entity;
 
+import io.concert.domain.model.Queue;
 import io.concert.infra.enums.QueueStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,4 +31,18 @@ public class QueueEntity {
     private LocalDateTime expiredAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+
+    public Queue toQueue() {
+        return new Queue(
+                id,
+                user.getId(),
+                token,
+                status,
+                expiredAt,
+                createdAt,
+                updatedAt
+        );
+    }
+
 }
