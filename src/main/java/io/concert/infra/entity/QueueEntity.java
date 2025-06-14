@@ -27,7 +27,7 @@ public class QueueEntity {
     @Column(nullable = false)
     private QueueStatus status;
 
-    private LocalDateTime expired_at;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime expiredAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
