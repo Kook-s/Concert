@@ -28,4 +28,8 @@ public class SeatEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private ReservationEntity reservation;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "schedule_id")
+    private ScheduleEntity schedule;
 }
