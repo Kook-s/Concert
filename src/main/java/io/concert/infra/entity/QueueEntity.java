@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Table(name = "queue")
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class QueueEntity {
 
@@ -62,3 +62,4 @@ public class QueueEntity {
     }
 
 }
+

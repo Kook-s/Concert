@@ -1,7 +1,10 @@
 package io.concert.infra.entity;
 
+import io.concert.domain.model.Reservation;
 import io.concert.infra.enums.ReservationStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +16,8 @@ import java.util.List;
 @Getter
 @Table(name = "reservation")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ReservationEntity {
 
     @Id
@@ -39,4 +44,26 @@ public class ReservationEntity {
     private ReservationStatus status;
 
     private LocalDateTime reservationAt;
+
+
+    public Reservation toDomain() {
+        return new Reservation(
+                id,
+                user.getId(),
+                schedule.getId(),
+                status,
+                reservationAt
+        );
+    }
+
+    public static ReservationEntity from(Reservation reservation) {
+        return ReservationEntity.builder()
+                .id(reservation.id())
+                .user(UserEntity.builder().id(reservation.userId()).build())
+//                .schedule() //### schedule model 생성하면 제거 ###
+                .status(reservation.status())
+                .reservationAt(reservation.reservationAt())
+                .build();
+    }
+
 }
