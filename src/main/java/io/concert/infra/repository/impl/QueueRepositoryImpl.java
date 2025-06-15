@@ -7,7 +7,6 @@ import io.concert.infra.enums.QueueStatus;
 import io.concert.infra.repository.QueueJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,8 +17,8 @@ public class QueueRepositoryImpl implements QueueRepository {
     // 특정 유저가 현재 발급받은 대기열 정보 조회
     @Override
     public Queue findQueue(long userId) {
-        return queueJpaRepository.findById(userId)
-                .map(QueueEntity::toQueue)
+        return queueJpaRepository.findByUserId(userId)
+                .map(QueueEntity::toDomain)
                 .orElse(null);
     }
 
@@ -27,7 +26,7 @@ public class QueueRepositoryImpl implements QueueRepository {
     @Override
     public Queue findQueue(String token) {
         return queueJpaRepository.findByToken(token)
-                .map(QueueEntity::toQueue)
+                .map(QueueEntity::toDomain)
                 .orElse(null);
     }
 
@@ -37,14 +36,21 @@ public class QueueRepositoryImpl implements QueueRepository {
         return queueJpaRepository.countByStatus(QueueStatus.ACTIVE);
     }
 
+    // 현재 대기자 수
     @Override
-    public Long findRemainQueue(Long queueId) {
-        return 0L;
+    public Long findRemainQueue(Queue queue) {
+        QueueEntity findQueueEntity = QueueEntity.from(queue);
+
+        return queueJpaRepository.countByCreatedAtBeforeAndStatus(
+                findQueueEntity.getCreatedAt(),
+                QueueStatus.WAITING
+        );
     }
 
     @Override
     public void saveQueue(Queue queue) {
-        QueueEntity queueEntity = queueJpaRepository.findById(queue.id()).orElse(null);
-        queueJpaRepository.save(queueEntity);
+        QueueEntity saveQueue = QueueEntity.from(queue);
+
+        queueJpaRepository.save(saveQueue);
     }
 }

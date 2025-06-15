@@ -7,7 +7,8 @@ public interface QueueRepository {
     Queue findQueue(String token);
 
     Long findActiveCount();
-    Long findRemainQueue(Long queueId);
+    Long findRemainQueue(Queue queue);
+
     void saveQueue(Queue token);
 
 }
