@@ -53,4 +53,15 @@ public class QueueRepositoryImpl implements QueueRepository {
 
         queueJpaRepository.save(saveQueue);
     }
+
 }
+
+
+
+
+
+
+
+
+
+

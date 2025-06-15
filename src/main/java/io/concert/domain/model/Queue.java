@@ -17,12 +17,15 @@ public record Queue(
         LocalDateTime updatedAt
 ) {
 
-    public static Queue createNew(long userId) {
+    public static Queue createNew(long userId, long activeCnt) {
+
+        QueueStatus status = activeCnt < 50? QueueStatus.ACTIVE:QueueStatus.WAITING;
+
         return new Queue(
             0L,
             userId,
             UUID.randomUUID().toString(),
-            QueueStatus.WAITING,
+            status,
             null,
             LocalDateTime.now(),
             null
