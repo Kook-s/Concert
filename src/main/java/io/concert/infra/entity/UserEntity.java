@@ -2,6 +2,8 @@ package io.concert.infra.entity;
 
 import io.concert.domain.model.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,8 @@ import java.util.List;
 @Getter
 @Table(name = "users")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserEntity {
 
     @Id
@@ -41,5 +45,13 @@ public class UserEntity {
 
     public User toUser() {
         return new User(id, email, password);
+    }
+
+    public static UserEntity from(User user) {
+        return new UserEntity(
+                user.id(),
+                user.email(),
+                user.password()
+                );
     }
 }
