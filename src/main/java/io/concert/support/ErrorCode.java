@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 사용자를 조회할 수 없습니다."),
-    POINT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 포인트를 조회할 수 없습니다.");
+    POINT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 포인트를 조회할 수 없습니다."),
+    SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 일정을 조회할 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;
