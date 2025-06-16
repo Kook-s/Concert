@@ -2,6 +2,8 @@ package io.concert.infra.entity;
 
 import io.concert.infra.enums.ReservationStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @Getter
 @Table(name = "reservation")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ReservationEntity {
 
     @Id
@@ -39,4 +43,6 @@ public class ReservationEntity {
     private ReservationStatus status;
 
     private LocalDateTime reservationAt;
+
+
 }
