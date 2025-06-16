@@ -26,7 +26,6 @@ public class ConcertEntity {
 
     private String title;
     private String description;
-    private ConcertStatus status;
 
     @OneToMany(mappedBy = "concert", fetch = FetchType.LAZY)
     private List<ScheduleEntity> schedules = new ArrayList<>();
@@ -35,8 +34,7 @@ public class ConcertEntity {
         return new Concert(
                 id,
                 title,
-                description,
-                status
+                description
         );
     }
 
@@ -45,7 +43,6 @@ public class ConcertEntity {
                 .id(concert.id())
                 .title(concert.title())
                 .description(concert.description())
-                .status(concert.status())
                 .build();
     }
 
