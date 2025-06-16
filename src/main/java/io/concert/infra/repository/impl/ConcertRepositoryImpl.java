@@ -7,6 +7,7 @@ import io.concert.infra.repository.jpa.ConcertJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,10 +17,20 @@ public class ConcertRepositoryImpl implements ConcertRepository {
     private final ConcertJpaRepository concertJpaRepository;
 
     @Override
+    public List<Concert> concertList() {
+        return concertJpaRepository.findAll()
+                .stream()
+                .map(ConcertEntity::toDomain)
+                .toList();
+    }
+
+    @Override
     public Optional<Concert> findById(long id) {
         return concertJpaRepository.findById(id)
                 .map(ConcertEntity::toDomain);
     }
+
+
 
 
 }

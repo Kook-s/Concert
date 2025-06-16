@@ -3,6 +3,7 @@ package io.concert.infra.repository.impl;
 import io.concert.domain.model.Schedule;
 import io.concert.domain.repository.ScheduleRepository;
 import io.concert.infra.entity.ScheduleEntity;
+import io.concert.infra.enums.ConcertStatus;
 import io.concert.infra.repository.jpa.ScheduleJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -25,8 +26,26 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
+    public List<Schedule> findByConcertId(long concertId) {
+        return scheduleJpaRepository.findByConcertId(concertId)
+                .stream()
+                .map(ScheduleEntity::toDomain)
+                .toList();
+    }
+
+    @Override
     public List<Schedule> findByConcertAt(LocalDateTime concertAt) {
         List<Schedule> list = scheduleJpaRepository.findByConcertAt(concertAt)
+                .stream()
+                .map(ScheduleEntity::toDomain)
+                .toList();
+
+        return list;
+    }
+
+    @Override
+    public List<Schedule> findOpenByConcert(LocalDateTime date) {
+        List<Schedule> list = scheduleJpaRepository.findByConcertAtBeforeAndStatus(date, ConcertStatus.OPEN)
                 .stream()
                 .map(ScheduleEntity::toDomain)
                 .toList();

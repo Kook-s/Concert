@@ -25,9 +25,6 @@ public class ScheduleEntity {
     @Column(name = "schedule_id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "concert_id")
-    private ConcertEntity concert;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -36,6 +33,10 @@ public class ScheduleEntity {
     private LocalDateTime concertAt;        // 콘서트 날짜
     private LocalDateTime reservationAt;    // 예약 시작 시간
     private LocalDateTime deadlineAt;       // 예약 마감 시간
+
+    @ManyToOne
+    @JoinColumn(name = "concert_id")
+    private ConcertEntity concert;
 
     @OneToMany(mappedBy = "schedule")
     private List<ReservationEntity> reservations = new ArrayList<>();

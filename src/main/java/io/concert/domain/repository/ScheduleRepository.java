@@ -9,5 +9,9 @@ import java.util.Optional;
 public interface ScheduleRepository {
 
     Optional<Schedule> findById(long id);
+    List<Schedule> findByConcertId(long concertId);
     List<Schedule> findByConcertAt(LocalDateTime date);
+    List<Schedule> findOpenByConcert(LocalDateTime date);
+
+
 }
