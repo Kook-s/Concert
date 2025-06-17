@@ -3,7 +3,7 @@ package io.concert.infra.repository.impl;
 import io.concert.domain.model.Point;
 import io.concert.domain.repository.PointRepository;
 import io.concert.infra.entity.PointEntity;
-import io.concert.infra.repository.PointJpaRepository;
+import io.concert.infra.repository.jpa.PointJpaRepository;
 import io.concert.support.CustomException;
 import io.concert.support.ErrorCode;
 import lombok.RequiredArgsConstructor;

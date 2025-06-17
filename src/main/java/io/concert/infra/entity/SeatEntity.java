@@ -1,7 +1,10 @@
 package io.concert.infra.entity;
 
+import io.concert.domain.model.Seat;
 import io.concert.infra.enums.SeatStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +14,8 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name = "seat")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class SeatEntity {
 
     @Id
@@ -22,10 +27,38 @@ public class SeatEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private SeatStatus status;
-    private LocalDateTime reservationAt;
+
     private int seatPrice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "schedule_id")
+    private ScheduleEntity schedule;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private ReservationEntity reservation;
+
+
+    public Seat toDomain() {
+        return new Seat(
+                id,
+                seatNo,
+                status,
+                seatPrice,
+                schedule.getId(),
+                0L
+//                reservation.getId()
+        );
+    }
+
+    public static SeatEntity from(Seat seat) {
+        return SeatEntity.builder()
+                .id(seat.id())
+                .seatNo(seat.seatNo())
+                .seatPrice(seat.seatPrice())
+                .schedule(ScheduleEntity.builder().id(seat.scheduleId()).build())
+                .reservation(null)
+                .build();
+    }
+
 }

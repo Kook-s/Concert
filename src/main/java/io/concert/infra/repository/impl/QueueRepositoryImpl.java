@@ -4,7 +4,7 @@ import io.concert.domain.model.Queue;
 import io.concert.domain.repository.QueueRepository;
 import io.concert.infra.entity.QueueEntity;
 import io.concert.infra.enums.QueueStatus;
-import io.concert.infra.repository.QueueJpaRepository;
+import io.concert.infra.repository.jpa.QueueJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
