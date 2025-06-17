@@ -11,7 +11,6 @@ import java.util.List;
 public interface ScheduleJpaRepository extends JpaRepository<ScheduleEntity, Long> {
 
     List<ScheduleEntity> findByConcertAt(LocalDateTime concertAt);
-    List<ScheduleEntity> findByConcertAtBefore();
     List<ScheduleEntity> findByConcertAtBeforeAndStatus(LocalDateTime concertAt, ConcertStatus status);
 
     List<ScheduleEntity> findByConcertId(long concertId);

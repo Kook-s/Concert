@@ -22,7 +22,10 @@ public class GetConcertDto {
                     )
                     .toList();
 
-            return new ConcertResponse(list);
+            return ConcertResponse.builder()
+                    .concerts(list)
+                    .build();
+
         }
     }
 }
