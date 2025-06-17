@@ -39,4 +39,11 @@ public class SeatRepositoryImpl implements SeatRepository {
                 .map(SeatEntity::toDomain)
                 .toList();
     }
+
+    @Override
+    public Seat reservationSeat(Seat seat) {
+        Seat result = seatJpaRepository.save(SeatEntity.from(seat)).toDomain();
+
+        return result;
+    }
 }

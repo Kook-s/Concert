@@ -46,8 +46,7 @@ public class SeatEntity {
                 status,
                 seatPrice,
                 schedule.getId(),
-                0L
-//                reservation.getId()
+                reservation != null ? reservation.getId() : null
         );
     }
 

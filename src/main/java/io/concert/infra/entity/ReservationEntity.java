@@ -1,5 +1,6 @@
 package io.concert.infra.entity;
 
+import io.concert.domain.model.Reservation;
 import io.concert.infra.enums.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,26 @@ public class ReservationEntity {
     private ReservationStatus status;
 
     private LocalDateTime reservationAt;
+
+    public Reservation toDomain() {
+        return new Reservation(
+                id,
+                user.getId(),
+                schedule.getId(),
+                status,
+                reservationAt
+        );
+    }
+
+    public static ReservationEntity from(Reservation reservation) {
+        return ReservationEntity.builder()
+                .id(reservation.id())
+                .user(UserEntity.builder().id(reservation.id()).build())
+                .schedule(ScheduleEntity.builder().id(reservation.id()).build())
+                .status(reservation.status())
+                .reservationAt(reservation.reservationAt())
+                .build();
+    }
 
 
 }
