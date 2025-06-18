@@ -57,9 +57,8 @@ public class ReservationEntity {
 
     public static ReservationEntity from(Reservation reservation) {
         return ReservationEntity.builder()
-                .id(reservation.id())
-                .user(UserEntity.builder().id(reservation.id()).build())
-                .schedule(ScheduleEntity.builder().id(reservation.id()).build())
+                .user(UserEntity.builder().id(reservation.userId()).build())
+                .schedule(ScheduleEntity.builder().id(reservation.scheduleId()).build())
                 .status(reservation.status())
                 .reservationAt(reservation.reservationAt())
                 .build();

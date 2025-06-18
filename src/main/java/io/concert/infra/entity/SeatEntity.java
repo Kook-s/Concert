@@ -46,7 +46,7 @@ public class SeatEntity {
                 status,
                 seatPrice,
                 schedule.getId(),
-                reservation != null ? reservation.getId() : null
+                reservation != null ? reservation.getId() : 0L
         );
     }
 
@@ -54,9 +54,10 @@ public class SeatEntity {
         return SeatEntity.builder()
                 .id(seat.id())
                 .seatNo(seat.seatNo())
+                .status(seat.status())
                 .seatPrice(seat.seatPrice())
                 .schedule(ScheduleEntity.builder().id(seat.scheduleId()).build())
-                .reservation(null)
+                .reservation(ReservationEntity.builder().id(seat.reservationId()).build())
                 .build();
     }
 

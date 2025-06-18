@@ -26,7 +26,7 @@ public class ReservationFacade {
     }
 
     @Transactional
-    public Reservation reservation(long scheduleId, long seatId, long userId){
+    public Reservation reservation(long userId, long scheduleId, long seatId){
         Schedule schedule = scheduleService.getSchedule(scheduleId);
         Seat seat = seatService.getSeat(seatId);
 
