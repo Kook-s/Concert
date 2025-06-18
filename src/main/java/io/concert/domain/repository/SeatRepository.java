@@ -11,4 +11,5 @@ public interface SeatRepository {
     Optional<Seat> findById(Long id);
     List<Seat> findByScheduleId(Long id);
     List<Seat> findByScheduleIdAndStatus(long scheduleId);
+    Seat reservationSeat(Seat seat);
 }

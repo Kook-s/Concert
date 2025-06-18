@@ -38,7 +38,6 @@ erDiagram
 
     RESERVATION {
         bigint reservation_id PK
-        bigint concert_id FK
         bigint schedule_id FK
         bigint user_id FK
         string status

@@ -28,4 +28,9 @@ public class SeatService {
     public List<Seat> getAvailableSeats(long scheduleId) {
         return seatRepository.findByScheduleIdAndStatus(scheduleId);
     }
+
+    public Seat reservationSeat(Seat seat, long reservationId) {
+        Seat result = seat.withReservation(reservationId);
+        return seatRepository.reservationSeat(result);
+    }
 }
