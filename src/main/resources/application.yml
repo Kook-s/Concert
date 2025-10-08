@@ -13,11 +13,13 @@ spring:
   profiles:
     active: dev
   datasource:
-    driver-class-name:
+    url: jdbc:mysql://localhost:3306/concert
+    username: root
+    password: root123
   jpa:
     hibernate:
       ddl-auto: create-drop
-    open-in-view: false
     properties:
       hibernate:
         format_sql: true
+        show_sql: true
