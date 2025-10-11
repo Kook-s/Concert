@@ -1,0 +1,38 @@
+package io.concert.infra.entity;
+
+import io.concert.support.type.SeatStatus;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Entity(name = "seat")
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class SeatEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "concert_schedule_id", nullable = false)
+    private ConcertScheduleEntity concertSchedule;
+
+    @Column(nullable = false)
+    private int seatNo;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SeatStatus status;
+
+    private LocalDateTime reservationAt;
+
+    @Column(nullable = false)
+    private int seatPrice;
+}
