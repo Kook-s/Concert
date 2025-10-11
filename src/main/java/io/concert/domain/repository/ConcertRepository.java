@@ -23,5 +23,5 @@ public interface ConcertRepository {
 
     Seat findSeat(Long seatId);
 
-    Seat findById(Long seatId);
+
 }
