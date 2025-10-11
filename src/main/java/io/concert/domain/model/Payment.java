@@ -12,4 +12,13 @@ public record Payment(
         int amount,
         LocalDateTime paymentAt
 ) {
+    public static Payment create(Long reservationId, Long userId, int amount) {
+        return Payment.builder()
+                .reservationId(reservationId)
+                .userId(userId)
+                .amount(amount)
+                .paymentAt(LocalDateTime.now())
+                .build();
+    }
+
 }
