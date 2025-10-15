@@ -1,18 +1,21 @@
 package io.concert.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
 @Builder
-public record OutboxEvent(
-        Long id,
-        String topic,
-        String key,
-        String payload,
-        String type,
-        String status,
-        LocalDateTime createAt,
-        String uuid
-) {
+@AllArgsConstructor
+public class OutboxEvent {
+    private Long id;
+    private String topic;
+    private String key;
+    private String payload;
+    private String type; // 이벤트 타입 (PAYMENT_COMPLETED)
+    private String status; // 이벤트 상태 (INIT, SUCCESS)
+    private LocalDateTime createdAt;
+    private String uuid;
 }
