@@ -1,5 +1,6 @@
 package io.concert.infra.entity;
 
+import io.concert.domain.model.Reservation;
 import io.concert.support.type.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public class ReservationEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "concert_schedule_id")
-    private ConcertScheduleEntity concertSchedule;
+    private ConcertScheduleEntity schedule;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id")
@@ -41,4 +42,29 @@ public class ReservationEntity {
     private ReservationStatus status;
 
     private LocalDateTime reservationAt;
+
+    public Reservation of(){
+        return Reservation.builder()
+                .id(id)
+                .concertId(concert.getId())
+                .scheduleId(schedule.getId())
+                .seatId(seat.getId())
+                .userId(user.getId())
+                .status(status)
+                .reservationAt(reservationAt)
+                .build();
+    }
+
+    public static ReservationEntity from(Reservation reservation){
+        return ReservationEntity.builder()
+                .id(reservation.id())
+                .concert(ConcertEntity.builder().id(reservation.concertId()).build())
+                .schedule(ConcertScheduleEntity.builder().id(reservation.scheduleId()).build())
+                .seat(SeatEntity.builder().id(reservation.seatId()).build())
+                .user(UserEntity.builder().id(reservation.userId()).build())
+                .status(reservation.status())
+                .reservationAt(reservation.reservationAt())
+                .build();
+    }
+
 }

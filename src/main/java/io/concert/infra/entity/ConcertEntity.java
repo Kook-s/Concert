@@ -1,5 +1,6 @@
 package io.concert.infra.entity;
 
+import io.concert.domain.model.Concert;
 import io.concert.support.type.ConcertStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,4 +28,23 @@ public class ConcertEntity {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private ConcertStatus status;
+
+    public Concert of(){
+        return Concert.builder()
+                .id(id)
+                .title(title)
+                .description(description)
+                .status(status)
+                .build();
+    }
+
+    public static ConcertEntity from(Concert concert){
+        return ConcertEntity.builder()
+                .id(concert.id())
+                .title(concert.title())
+                .description(concert.description())
+                .status(concert.status())
+                .build();
+    }
+
 }

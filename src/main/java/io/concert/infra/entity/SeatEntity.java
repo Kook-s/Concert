@@ -1,5 +1,6 @@
 package io.concert.infra.entity;
 
+import io.concert.domain.model.Seat;
 import io.concert.support.type.SeatStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,4 +36,26 @@ public class SeatEntity {
 
     @Column(nullable = false)
     private int seatPrice;
+
+    public Seat of() {
+        return Seat.builder()
+                .id(id)
+                .concertScheduleId(concertSchedule.getId())
+                .seatNo(seatNo)
+                .status(status)
+                .reservationAt(reservationAt)
+                .seatPrice(seatPrice)
+                .build();
+    }
+
+    public static SeatEntity from(Seat seat) {
+        return SeatEntity.builder()
+                .id(seat.id())
+                .concertSchedule(ConcertScheduleEntity.builder().id(seat.concertScheduleId()).build())
+                .seatNo(seat.seatNo())
+                .status(seat.status())
+                .reservationAt(seat.reservationAt())
+                .seatPrice(seat.seatPrice())
+                .build();
+    }
 }
