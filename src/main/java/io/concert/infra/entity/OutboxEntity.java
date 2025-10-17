@@ -53,21 +53,21 @@ public class OutboxEntity {
                 .payload(payload)
                 .type(type)
                 .status(status)
-                .createAt(createdAt)
+                .createdAt(createdAt)
                 .uuid(uuid)
                 .build();
     }
 
-    public static OutboxEvent from(OutboxEvent event) {
-        return OutboxEvent.builder()
-                .id(event.id())
-                .topic(event.topic())
-                .key(event.key())
-                .payload(event.payload())
-                .type(event.type())
-                .status(event.status())
-                .createAt(event.createAt())
-                .uuid(event.uuid())
+    public static OutboxEntity from(OutboxEvent event) {
+        return OutboxEntity.builder()
+                .id(event.getId())
+                .topic(event.getTopic())
+                .eventKey(event.getKey())
+                .payload(event.getPayload())
+                .type(event.getType())
+                .status(event.getStatus())
+                .createdAt(event.getCreatedAt())
+                .uuid(event.getUuid())
                 .build();
     }
 }

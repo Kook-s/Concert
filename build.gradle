@@ -50,6 +50,11 @@ dependencies {
     //redis
     implementation 'org.redisson:redisson-spring-boot-starter:3.37.0'
 //    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    //kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+
 }
 
 tasks.named('test') {
