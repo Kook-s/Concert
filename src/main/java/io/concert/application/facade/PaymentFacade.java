@@ -21,7 +21,6 @@ public class PaymentFacade {
     private final PaymentService paymentService;
     private final PointService pointService;
     private final ConcertService concertService;
-    private final PaymentRepository paymentRepository;
     private final PaymentEventService paymentEventService;
 
     @DistributedLock(key = "#lockName")
