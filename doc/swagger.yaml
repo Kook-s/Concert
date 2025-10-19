@@ -1,0 +1,315 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/v1/users/{userId}/point:
+    get:
+      tags:
+      - point-controller
+      operationId: getPoint
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PointResponse"
+    post:
+      tags:
+      - point-controller
+      operationId: chargePoint
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PointRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PointResponse"
+  /api/v1/queue/tokens:
+    post:
+      tags:
+      - queue-controller
+      operationId: issueToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueueRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/QueueResponse"
+  /api/v1/payments:
+    post:
+      tags:
+      - payment-controller
+      operationId: payment
+      parameters:
+      - name: Token
+        in: header
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaymentResponse"
+  /api/v1/queue/status:
+    get:
+      tags:
+      - queue-controller
+      operationId: status
+      parameters:
+      - name: Token
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: User-Id
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/QueueResponse"
+  /api/v1/concerts:
+    get:
+      tags:
+      - concert-controller
+      operationId: getConcerts
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ConcertResponse"
+  /api/v1/concerts/{concertId}/schedules:
+    get:
+      tags:
+      - concert-controller
+      operationId: getConcertSchedules
+      parameters:
+      - name: concertId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ScheduleResponse"
+  /api/v1/concerts/{concertId}/schedules/{scheduleId}/seats:
+    get:
+      tags:
+      - concert-controller
+      operationId: getSeat
+      parameters:
+      - name: concertId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: scheduleId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SeatResponse"
+components:
+  schemas:
+    PointRequest:
+      type: object
+      properties:
+        amount:
+          minimum: 1
+          type: integer
+          format: int64
+    PointResponse:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        currentAmount:
+          type: integer
+          format: int64
+    QueueRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+    QueueResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        status:
+          type: string
+          enum:
+          - WAITING
+          - ACTIVE
+          - EXPIRED
+        rank:
+          type: integer
+          format: int64
+    PaymentRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        reservationId:
+          type: integer
+          format: int64
+    PaymentResponse:
+      type: object
+      properties:
+        paymentId:
+          type: integer
+          format: int64
+        amount:
+          type: integer
+          format: int32
+        paymentAt:
+          type: string
+          format: date-time
+    ConcertDto:
+      type: object
+      properties:
+        concertId:
+          type: integer
+          format: int64
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+          - AVAILABLE
+          - UNAVAILABLE
+    ConcertResponse:
+      type: object
+      properties:
+        concerts:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConcertDto"
+    ScheduleDto:
+      type: object
+      properties:
+        scheduleId:
+          type: integer
+          format: int64
+        concertAt:
+          type: string
+          format: date-time
+        reservationAt:
+          type: string
+          format: date-time
+        deadline:
+          type: string
+          format: date-time
+    ScheduleResponse:
+      type: object
+      properties:
+        concertId:
+          type: integer
+          format: int64
+        schedules:
+          type: array
+          items:
+            $ref: "#/components/schemas/ScheduleDto"
+    SeatDto:
+      type: object
+      properties:
+        seatId:
+          type: integer
+          format: int64
+        seatNo:
+          type: integer
+          format: int32
+        seatStatus:
+          type: string
+          enum:
+          - AVAILABLE
+          - UNAVAILABLE
+        seatPrice:
+          type: integer
+          format: int32
+    SeatResponse:
+      type: object
+      properties:
+        concertId:
+          type: integer
+          format: int64
+        scheduleId:
+          type: integer
+          format: int64
+        concertAt:
+          type: string
+          format: date-time
+        maxSeats:
+          type: integer
+          format: int64
+        seats:
+          type: array
+          items:
+            $ref: "#/components/schemas/SeatDto"
