@@ -18,7 +18,7 @@ public class QueueDto {
             Long rank
     ) {
 
-        public static QueueResponse from(Queue token) {
+        public static QueueResponse of(Queue token) {
             return QueueResponse.builder()
                     .token(token.token())
                     .status(token.status())
