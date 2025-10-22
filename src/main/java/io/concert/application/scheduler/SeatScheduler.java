@@ -41,6 +41,5 @@ public class SeatScheduler {
             Reservation expiredReservation = unpaidReservation.changeStatus(ReservationStatus.EXPIRED);
             reservationRepository.save(expiredReservation);
         }
-
     }
 }

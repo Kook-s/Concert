@@ -32,7 +32,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public List<Reservation> findByConcertIdAndScheduleAndSeatId(Long concertId, Long scheduleId, Long seatId) {
+    public List<Reservation> findByConcertIdAndScheduleIdAndSeatId(Long concertId, Long scheduleId, Long seatId) {
         return reservationJpaRepository.findByConcertIdAndScheduleIdAndSeatId(concertId, scheduleId, seatId)
                 .stream()
                 .map(ReservationEntity::of)
