@@ -13,6 +13,6 @@ public class TokenScheduler {
 
     @Scheduled(fixedDelay = 10000)
     public void adjustActiveToken() {
-        queueService.updateActivateTokens();
+        queueService.updateActiveTokens();
     }
 }
