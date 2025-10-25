@@ -25,7 +25,10 @@ public enum ErrorType {
     RESOURCE_NOT_FOUND(ErrorCode.NOT_FOUND, "리소스를 찾을 수 없습니다.", LogLevel.WARN),
 
     // Internal Server Error
-    INTERNAL_ERROR(ErrorCode.DB_ERROR, "서버 에러가 발생하였습니다.", LogLevel.ERROR);
+    INTERNAL_ERROR(ErrorCode.DB_ERROR, "서버 에러가 발생하였습니다.", LogLevel.ERROR),
+
+    LOCK_ACQUISITION_FAILED(ErrorCode.LOCK_ERROR, "Redis Error.", LogLevel.ERROR),
+    ;
 
     private final ErrorCode code;
     private final String message;
