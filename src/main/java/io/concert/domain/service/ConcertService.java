@@ -5,6 +5,7 @@ import io.concert.domain.model.ConcertSchedule;
 import io.concert.domain.model.Seat;
 import io.concert.domain.repository.ConcertRepository;
 import io.concert.support.type.SeatStatus;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,7 @@ public class ConcertService {
 
     public void assignmentSeat(Seat seat) {
         Seat assignment = seat.assign();
+        concertRepository.saveSeat(assignment);
     }
 
     public Seat getSeat(Long seatId) {

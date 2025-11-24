@@ -46,7 +46,7 @@ public class QueueService {
         return queueRepository.findToken(token);
     }
 
-    public void updateActivateTokens() {
+    public void updateActiveTokens() {
         long activateCount = queueRepository.getActiveTokenCount();
 
         if (activateCount < MAX_ACTIVE_TOKENS) {

@@ -18,7 +18,7 @@ public record ConcertSchedule(
         if(reservationAt().isAfter(LocalDateTime.now())) {
             throw new CoreException(ErrorType.BEFORE_RESERVATION_AT, "에약 시간: " + reservationAt());
         }
-        if(reservationAt().isAfter(LocalDateTime.now())) {
+        if(deadline.isBefore(LocalDateTime.now())) {
             throw new CoreException(ErrorType.AFTER_DEADLINE, "마감 시간: " + deadline);
         }
     }

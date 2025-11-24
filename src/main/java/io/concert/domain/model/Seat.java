@@ -29,7 +29,7 @@ public record Seat(
                 .concertScheduleId(concertScheduleId)
                 .seatNo(seatNo)
                 .status(SeatStatus.UNAVAILABLE)
-                .reservationAt(reservationAt)
+                .reservationAt(LocalDateTime.now())
                 .seatPrice(seatPrice)
                 .build();
     }
