@@ -13,7 +13,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class TokenInterceptor implements HandlerInterceptor {
+    public class TokenInterceptor implements HandlerInterceptor {
 
     private final QueueService queueService;
     private static final String TOKEN = "Token";

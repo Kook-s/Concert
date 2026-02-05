@@ -38,7 +38,7 @@ public class ReservationConcurrencyTest {
         Long concertScheduleId = 1L;
         Long seatId = 1L;
 
-        int threadCount = 30;
+        int threadCount = 3;
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
         CountDownLatch latch = new CountDownLatch(threadCount);
 

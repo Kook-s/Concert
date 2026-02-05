@@ -45,7 +45,7 @@ public class QueueRepositoryImpl implements QueueRepository {
 
     @Override
     public void saveWaitingToken(String token) {
-        redisRepository.addSortedSet(WAITING_TOKEN_KET, token, System.currentTimeMillis());
+        redisRepository.addSortedSet(WAITING_TOKEN_KET + ":" + token, token, System.currentTimeMillis());
     }
 
     @Override

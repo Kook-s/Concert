@@ -36,7 +36,7 @@ public class RedisRepository {
     }
 
     public void addSortedSet(String key, String value, double score) {
-        redisTemplate.opsForSet().add(key, value, score);
+        redisTemplate.opsForZSet().add(key, value, score);
     }
 
     public Long getSortedSetSize(String key) {
