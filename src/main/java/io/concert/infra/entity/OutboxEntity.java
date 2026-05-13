@@ -39,7 +39,7 @@ public class OutboxEntity {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime processedAt;
 
     @Column(nullable = false)

@@ -23,7 +23,7 @@ public record ReservationResult(
                 .reservationId(reservation.id())
                 .concertId(schedule.concertId())
                 .concertAt(schedule.concertAt())
-                .seat(Seat.builder().id(seat.id()).build())
+                .seat(seat)
                 .status(reservation.status())
                 .build();
     }

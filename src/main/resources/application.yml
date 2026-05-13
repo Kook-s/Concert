@@ -10,29 +10,30 @@ server:
   port: 8080
 
 spring:
-  profiles:
-    active: dev
   datasource:
-    url: jdbc:mysql://localhost:3306/concert
-    username: root
-    password: root123
+    url: ${DB_URL:jdbc:mysql://localhost:3306/concert}
+    username: ${DB_USERNAME:concert}
+    password: ${DB_PASSWORD:concert123}
   sql:
     init:
       mode: always
+
   jpa:
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
     properties:
       hibernate:
-        format_sql: true
-        show_sql: true
+        format_sql: false
+        show_sql: false
+
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
       group-id: concert-group
       auto-offset-reset: earliest
@@ -45,3 +46,12 @@ spring:
 event:
   payment:
     topic: concert-payment
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+    endpoint:
+      prometheus:
+        enabled: true

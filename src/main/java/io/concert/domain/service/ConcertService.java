@@ -4,11 +4,13 @@ import io.concert.domain.model.Concert;
 import io.concert.domain.model.ConcertSchedule;
 import io.concert.domain.model.Seat;
 import io.concert.domain.repository.ConcertRepository;
+import io.concert.infra.redis.RedisSeatHoldRepository;
 import io.concert.support.type.SeatStatus;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.List;
 
 @Service
@@ -16,6 +18,7 @@ import java.util.List;
 public class ConcertService {
 
     private final ConcertRepository concertRepository;
+    private final RedisSeatHoldRepository redisSeatHoldRepository;
 
     public List<Concert> getConcerts() {
         return concertRepository.findConcerts();
@@ -49,6 +52,12 @@ public class ConcertService {
     public void assignmentSeat(Seat seat) {
         Seat assignment = seat.assign();
         concertRepository.saveSeat(assignment);
+
+        redisSeatHoldRepository.save(seat.id(), Duration.ofMinutes(5));
+    }
+
+    public void releaseSeatHold(Long seatId) {
+        redisSeatHoldRepository.release(seatId);
     }
 
     public Seat getSeat(Long seatId) {
