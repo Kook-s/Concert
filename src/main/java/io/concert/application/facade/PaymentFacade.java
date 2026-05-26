@@ -5,12 +5,12 @@ import io.concert.domain.model.Payment;
 import io.concert.domain.model.Point;
 import io.concert.domain.model.Reservation;
 import io.concert.domain.model.Seat;
-import io.concert.domain.repository.PaymentRepository;
 import io.concert.domain.service.*;
 import io.concert.support.aop.DistributedLock;
 import io.concert.support.type.ReservationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -24,6 +24,7 @@ public class PaymentFacade {
     private final PaymentEventService paymentEventService;
 
     @DistributedLock(key = "#lockName")
+    @Transactional
     public Payment processPayment(String lockName, String token, Long reservationId, Long userId) {
         Reservation reservation = reservationService.checkReservation(reservationId, userId);
         Seat seat = concertService.getSeat(reservation.seatId());
@@ -31,12 +32,12 @@ public class PaymentFacade {
 
         pointService.usePoint(point, seat.seatPrice());
 
-        Reservation reserved = reservationService.changeStatus(reservation, ReservationStatus.COMPLETED);
+        reservationService.changeStatus(reservation, ReservationStatus.COMPLETED);
 
         queueService.expireToken(token);
 
         Payment bill = paymentService.createBill(reservationId, userId, seat.seatPrice());
-
+        concertService.releaseSeatHold(reservation.seatId());
 
         paymentEventService.publicEvent(PaymentEventCommand.from(bill));
 

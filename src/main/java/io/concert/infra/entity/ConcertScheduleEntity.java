@@ -46,7 +46,7 @@ public class ConcertScheduleEntity {
     public static ConcertScheduleEntity from(ConcertSchedule concertSchedule) {
         return ConcertScheduleEntity.builder()
                 .id(concertSchedule.id())
-                .concert(ConcertEntity.builder().id(concertSchedule.id()).build())
+                .concert(ConcertEntity.builder().id(concertSchedule.concertId()).build())
                 .reservationAt(concertSchedule.reservationAt())
                 .deadline(concertSchedule.deadline())
                 .concertAt(concertSchedule.concertAt())

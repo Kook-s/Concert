@@ -16,21 +16,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableCaching
 public class RedisConfig {
 
-    @Value("${spring.data.redis.host}")
-    private String host;
-
-    @Value("${spring.data.redis.port}")
-    private int redisPort;
-
-
-    @Bean
-    public RedissonClient redissonClient() {
-        Config config = new Config();
-        config.useSingleServer()
-                .setAddress("redis://" + host + ":" + redisPort);
-        return Redisson.create(config);
-    }
-
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();

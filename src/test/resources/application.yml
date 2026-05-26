@@ -1,15 +1,19 @@
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+    operations-sorter: method
+
+server:
+  port: 8080
+
 spring:
   datasource:
-    hikari:
-      maximum-pool-size: 30
-      minimum-idle: 10
-      idle-timeout: 10000
-      max-lifetime: 30000
-      connection-timeout: 30000
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/concert}
+    username: ${DB_USERNAME:concert}
+    password: ${DB_PASSWORD:concert123}
   sql:
     init:
       mode: always
@@ -19,14 +23,14 @@ spring:
     defer-datasource-initialization: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-    show-sql: true
+        format_sql: false
+        show_sql: false
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
       group-id: concert-group
       auto-offset-reset: earliest

@@ -1,7 +1,5 @@
 package io.concert.support.aop;
 
-import io.concert.support.code.ErrorType;
-import io.concert.support.exception.CoreException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -14,7 +12,7 @@ import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.support.TransactionSynchronizationAdapter;
+import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.lang.reflect.Method;
@@ -56,18 +54,28 @@ public class DistributedLockAop {
 
         } finally {
             if (lockAcquired && rLock.isHeldByCurrentThread()) {
-                TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
-                    @Override
-                    public void afterCommit() {
-                        try {
-                            rLock.unlock();
-                            log.info("[RedissonLock] 락 해제 완료 - lockKey: {}", lockKey);
-                        } catch (Exception e) {
-                            log.warn("[RedissonLock] 이미 해제된 락 또는 스레드 불일치 - lockKey: {}", lockKey);
+                if (TransactionSynchronizationManager.isSynchronizationActive()) {
+                    TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                        @Override
+                        public void afterCompletion(int status) {
+                            unlockSafely(rLock, lockKey);
                         }
-                    }
-                });
+                    });
+                } else {
+                    unlockSafely(rLock, lockKey);
+                }
             }
+        }
+    }
+
+    private void unlockSafely(RLock rLock, String lockKey) {
+        try {
+            if (rLock.isHeldByCurrentThread()) {
+                rLock.unlock();
+                log.info("[RedissonLock] 락 해제 완료 - lockKey: {}", lockKey);
+            }
+        } catch (Exception e) {
+            log.warn("[RedissonLock] 이미 해제된 락 또는 스레드 불일치 - lockKey: {}", lockKey);
         }
     }
 

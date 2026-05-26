@@ -32,7 +32,7 @@ public class ReservationDto {
     public record ReservationResponse(
             Long reservationId,
             Long concertId,
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss")
+            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
             LocalDateTime concertAt,
             SeatDto seat,
             ReservationStatus reservationStatus

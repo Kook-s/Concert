@@ -7,6 +7,7 @@ import io.concert.support.aop.DistributedLock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class PointFacade {
     }
 
     @DistributedLock(key = "#lockName")
+    @Transactional
     public Point chargePoint(String lockName, Long userId, Long amount) {
         userService.validateUser(userId);
         return pointService.chargePoint(userId, amount);

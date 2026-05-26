@@ -1,4 +1,4 @@
-package io.concert.infra.repository;
+package io.concert.infra.redis;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,8 +26,12 @@ public class RedisRepository {
     }
 
     public Long getSize(String key) {
-        Set<String> keys = redisTemplate.keys("activeToken:*");
+        if ("waitingToken".equals(key)) {
+            Long size = redisTemplate.opsForZSet().zCard(key);
+            return size != null ? size : 0L;
+        }
 
+        Set<String> keys = redisTemplate.keys(key + ":*");
         return (long) (keys != null ? keys.size() : 0);
     }
 
@@ -36,7 +40,7 @@ public class RedisRepository {
     }
 
     public void addSortedSet(String key, String value, double score) {
-        redisTemplate.opsForSet().add(key, value, score);
+        redisTemplate.opsForZSet().add(key, value, score);
     }
 
     public Long getSortedSetSize(String key) {
